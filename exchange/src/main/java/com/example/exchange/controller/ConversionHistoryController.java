@@ -1,0 +1,36 @@
+package com.example.exchange.controller;
+
+import com.example.exchange.model.response.CurrencyConversionResponse;
+import com.example.exchange.service.ConversionHistoryService;
+import io.swagger.v3.oas.annotations.Operation;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Mono;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/v1/conversion-history")
+public class ConversionHistoryController {
+
+    private final ConversionHistoryService conversionHistoryService;
+
+    public ConversionHistoryController(ConversionHistoryService conversionHistoryService) {
+        this.conversionHistoryService = conversionHistoryService;
+    }
+
+    @GetMapping("/all-history")
+    @Operation(summary = "All Transactions History", description = "Returns All Currency Transactions History")
+    public Mono<List<CurrencyConversionResponse>> getAllConversionHistory() {
+        return conversionHistoryService.getAllConversionHistory();
+    }
+
+    @GetMapping("/by-date")
+    @Operation(summary = "Transactions History By Date ", description = "Returns Currency Transactions History according to Date")
+    public Mono<List<CurrencyConversionResponse>> getConversionHistoryByDate(
+            @RequestParam(required = false) String date) {
+        return conversionHistoryService.getConversionHistoryByDate(date);
+    }
+}
