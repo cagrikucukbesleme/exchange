@@ -21,14 +21,14 @@ public class ConversionHistoryController {
         this.conversionHistoryService = conversionHistoryService;
     }
 
-    @GetMapping("/all-history")
+    @GetMapping("/all")
     @Operation(summary = "All Transactions History", description = "Returns All Currency Transactions History")
     public Mono<List<CurrencyConversionResponse>> getAllConversionHistory() {
         return conversionHistoryService.getAllConversionHistory();
     }
 
     @GetMapping("/by-date")
-    @Operation(summary = "Transactions History By Date ", description = "Returns Currency Transactions History according to Date")
+    @Operation(summary = "Transaction History By Date ", description = "Returns Currency Transactions History according to Date")
     public Mono<List<CurrencyConversionResponse>> getConversionHistoryByDate(
             @RequestParam(required = false) String date) {
         return conversionHistoryService.getConversionHistoryByDate(date);

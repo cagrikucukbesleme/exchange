@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/v1/currency-conversion")
+@RequestMapping("/v1/currency")
 public class CurrencyConversionController {
 
     private final CurrencyConversionService currencyConversionService;
@@ -21,13 +21,13 @@ public class CurrencyConversionController {
         this.currencyConversionService = currencyConversionService;
     }
 
-    @PostMapping("/exchange")
+    @PostMapping("/convert")
     @Operation(summary = "Exchange Currencies", description = "Returns Currencies Exchange Rate according to amount")
     public Mono<CurrencyConversionResponse> getRate(@RequestBody CurrencyConversionRequest request) {
         return currencyConversionService.convertCurrency(request);
     }
 
-    @PostMapping("/bulk")
+    @PostMapping("/bulk-convert")
     @Operation(summary = "Bulk Exchange Currencies",
             description = "Returns Currencies Exchange Rate, upload a csv file for bulk currency conversion  uploading file\n" +
             "key: \"file\"\n" +
