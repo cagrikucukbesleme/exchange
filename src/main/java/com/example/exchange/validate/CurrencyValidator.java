@@ -1,12 +1,16 @@
 package com.example.exchange.validate;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
 import java.util.Currency;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 public class CurrencyValidator {
 
-    public static class CurrencyValidationException extends IllegalArgumentException {
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public static class CurrencyValidationException extends RuntimeException {
         public CurrencyValidationException(String message) {
             super(message);
         }
