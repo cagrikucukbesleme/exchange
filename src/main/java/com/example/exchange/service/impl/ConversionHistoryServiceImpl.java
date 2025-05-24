@@ -5,7 +5,9 @@ import com.example.exchange.model.response.CurrencyConversionResponse;
 import com.example.exchange.repository.ConversionHistoryTransactionRepository;
 import com.example.exchange.service.ConversionHistoryService;
 import com.example.exchange.utils.DateUtils;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDate;
@@ -37,9 +39,14 @@ public class ConversionHistoryServiceImpl implements ConversionHistoryService {
     @Override
     public Mono<List<CurrencyConversionResponse>> getConversionHistoryByDate(String date) {
         LocalDate localDate= DateUtils.parseStringToLocalDate(date);
-        List<ConversionHistoryTransaction> conversionHistoryTransactions = repository.findAll();
+        List<ConversionHistoryTransaction> conversionHistoryTransactions = repository.findByDate(localDate);
+
+        if (conversionHistoryTransactions.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "No conversion history records were found for the specified date: " + localDate);
+        }
+
         List<CurrencyConversionResponse> currencyConversionResponses= conversionHistoryTransactions.stream()
-                .filter(transaction -> transaction.getDate() != null && transaction.getDate().equals(localDate))
                 .map(transaction -> new CurrencyConversionResponse(
                         transaction.getId(),
                         transaction.getConvertedAmount(),
