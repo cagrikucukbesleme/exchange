@@ -9,7 +9,7 @@ public class WebClientConfig {
     @Bean
     public WebClient webClient() {
         return WebClient.builder()
-                .baseUrl("https://api.exchangerate.host")
+                .baseUrl("https://api.frankfurter.dev/v1")
                 .build();
     }
 }
