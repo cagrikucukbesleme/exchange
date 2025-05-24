@@ -1,5 +1,6 @@
 package com.example.exchange.utils;
 
+import com.example.exchange.constant.Constants;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -32,7 +33,8 @@ public class DateUtils {
 
             }
         }
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid date format: " + dateString + " Please follow definitions instructions");
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                Constants.INVALID_DATE_FORMAT_PLEASE_FOLLOW_DEFINITIONS_INSTRUCTIONS  + dateString );
     }
 
 }

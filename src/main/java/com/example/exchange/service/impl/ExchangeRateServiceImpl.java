@@ -1,5 +1,6 @@
 package com.example.exchange.service.impl;
 
+import com.example.exchange.constant.Constants;
 import com.example.exchange.model.response.CurrentExchangeRateResponse;
 import com.example.exchange.model.response.ExchangeRateApiCallResponse;
 import com.example.exchange.service.ExchangeRateService;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+import static com.example.exchange.constant.Constants.*;
 import static com.example.exchange.utils.CurrencyUtils.normalizeCurrencyCode;
 import static com.example.exchange.validate.CurrencyValidator.validateCurrencies;
 
@@ -17,7 +19,7 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
     private final WebClient webClient;
 
     public ExchangeRateServiceImpl(WebClient.Builder webClientBuilder) {
-        this.webClient = webClientBuilder.baseUrl("https://api.frankfurter.dev/v1").build();
+        this.webClient = webClientBuilder.baseUrl(Constants.API_FRANKFURTER_DEV_V1).build();
     }
 
     @Override
@@ -27,7 +29,7 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
             toCurrency = normalizeCurrencyCode(toCurrency);
             validateCurrencies(fromCurrency, toCurrency);
         }catch (CurrencyValidator.CurrencyValidationException e) {
-            throw new CurrencyValidator.CurrencyValidationException("Error:  " + e.getMessage());
+            throw new CurrencyValidator.CurrencyValidationException(ERROR + e.getMessage());
         }
 
         Mono<ExchangeRateApiCallResponse> currentExchangeRateResponseMono = getExchangeRateFromExternalResource(
@@ -45,9 +47,9 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
         return webClient
                 .get()
                 .uri(uriBuilder -> uriBuilder
-                        .path("/latest")
-                        .queryParam("base", fromCurrency)
-                        .queryParam("symbols", toCurrency)
+                        .path(LATEST)
+                        .queryParam(BASE, fromCurrency)
+                        .queryParam(SYMBOLS, toCurrency)
                         .build())
                 .retrieve()
                 .bodyToMono(ExchangeRateApiCallResponse.class);

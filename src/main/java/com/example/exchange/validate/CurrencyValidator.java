@@ -7,6 +7,8 @@ import java.util.Currency;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static com.example.exchange.constant.Constants.*;
+
 public class CurrencyValidator {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -24,20 +26,20 @@ public class CurrencyValidator {
 
     public static void validateCurrency(String currencyCode) {
         if (currencyCode == null || currencyCode.trim().isEmpty()) {
-            throw new CurrencyValidationException("Currency code cannot be null or empty");
+            throw new CurrencyValidationException(CURRENCY_CODE_CANNOT_BE_NULL_OR_EMPTY);
         }
 
         String normalizedCode = currencyCode.toUpperCase();
 
         if (normalizedCode.length() != 3) {
             throw new CurrencyValidationException(
-                    String.format("'%s' is not a valid currency code (must be 3 letters)", currencyCode)
+                    String.format(S_IS_NOT_A_VALID_CURRENCY_CODE_MUST_BE_3_LETTERS, currencyCode)
             );
         }
 
         if (!AVAILABLE_CURRENCIES.contains(normalizedCode)) {
             throw new CurrencyValidationException(
-                    String.format("'%s' is not a valid ISO currency code. Available currencies: %s",
+                    String.format(S_IS_NOT_A_VALID_ISO_CURRENCY_CODE_AVAILABLE_CURRENCIES_S,
                             currencyCode,
                             String.join(", ", AVAILABLE_CURRENCIES))
             );
@@ -50,7 +52,7 @@ public class CurrencyValidator {
 
         if (fromCurrency.equalsIgnoreCase(toCurrency)) {
             throw new CurrencyValidationException(
-                    String.format("Source and target currencies cannot be same (%s)", fromCurrency)
+                    String.format(SOURCE_AND_TARGET_CURRENCIES_CANNOT_BE_SAME_S, fromCurrency)
             );
         }
     }
