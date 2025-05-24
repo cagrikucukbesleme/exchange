@@ -29,7 +29,7 @@ public class ConversionHistoryController {
 
     @GetMapping("/by-date")
     @Operation(summary = "Transaction History By Date ", description = "Returns Currency Transactions History according to Date" +
-            "Date Formats could be \"dd/MM/yyyy\"\n" +
+            "Date Formats must be one of them \"dd/MM/yyyy\"\n" +
             " \"MM/dd/yyyy\"\n" +
             " \"yyyyMMdd\"\n" +
             " \"dd-MMM-yyyy\"")

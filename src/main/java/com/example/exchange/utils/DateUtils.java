@@ -1,5 +1,8 @@
 package com.example.exchange.utils;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -29,7 +32,7 @@ public class DateUtils {
 
             }
         }
-        throw new IllegalArgumentException("Unsupported date format: " + dateString);
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid date format: " + dateString + " Please follow definitions instructions");
     }
 
 }
