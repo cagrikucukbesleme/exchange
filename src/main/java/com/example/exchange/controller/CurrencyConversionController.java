@@ -4,6 +4,7 @@ import com.example.exchange.model.request.CurrencyConversionRequest;
 import com.example.exchange.model.response.CurrencyConversionResponse;
 import com.example.exchange.service.CurrencyConversionService;
 import io.swagger.v3.oas.annotations.Operation;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import reactor.core.publisher.Mono;
@@ -13,13 +14,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/v1/currency")
+@AllArgsConstructor
 public class CurrencyConversionController {
 
     private final CurrencyConversionService currencyConversionService;
-
-    public CurrencyConversionController(CurrencyConversionService currencyConversionService) {
-        this.currencyConversionService = currencyConversionService;
-    }
 
     @PostMapping("/convert")
     @Operation(summary = "Exchange Currencies", description = "Returns Currencies Exchange Rate according to amount")

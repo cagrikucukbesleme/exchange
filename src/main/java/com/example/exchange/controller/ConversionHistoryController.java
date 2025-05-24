@@ -3,6 +3,7 @@ package com.example.exchange.controller;
 import com.example.exchange.model.response.CurrencyConversionResponse;
 import com.example.exchange.service.ConversionHistoryService;
 import io.swagger.v3.oas.annotations.Operation;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,13 +14,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/v1/conversion-history")
+@AllArgsConstructor
 public class ConversionHistoryController {
 
     private final ConversionHistoryService conversionHistoryService;
-
-    public ConversionHistoryController(ConversionHistoryService conversionHistoryService) {
-        this.conversionHistoryService = conversionHistoryService;
-    }
 
     @GetMapping("/all")
     @Operation(summary = "All Transactions History", description = "Returns All Currency Transactions History")

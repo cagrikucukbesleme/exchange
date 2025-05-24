@@ -8,7 +8,9 @@ import com.example.exchange.repository.ConversionHistoryTransactionRepository;
 import com.example.exchange.service.CurrencyConversionService;
 import com.example.exchange.service.ExchangeRateService;
 import com.example.exchange.utils.CsvUtils;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import reactor.core.publisher.Mono;
 
@@ -19,16 +21,12 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
+@Transactional
 public class CurrencyConversionServiceImpl implements CurrencyConversionService {
 
     private final ExchangeRateService exchangeRateService;
     private final ConversionHistoryTransactionRepository repository;
-
-    public CurrencyConversionServiceImpl(ExchangeRateService exchangeRateService,
-                                         ConversionHistoryTransactionRepository conversionHistoryTransactionRepository) {
-        this.exchangeRateService = exchangeRateService;
-        this.repository = conversionHistoryTransactionRepository;
-    }
 
     @Override
     public Mono<CurrencyConversionResponse> convertCurrency(CurrencyConversionRequest request) {
@@ -48,14 +46,19 @@ public class CurrencyConversionServiceImpl implements CurrencyConversionService 
     }
 
     private CurrencyConversionResponse conversionCurrency(CurrencyConversionRequest request){
+
         CurrentExchangeRateResponse currentExchangeRateResponse = exchangeRateService.getExchangeRate(
                 request.getSourceCurrency(), request.getTargetCurrency()).block();
+
         assert currentExchangeRateResponse != null;
         double rate = currentExchangeRateResponse.getRate();
         double convertedAmount = request.getAmount() * rate;
+
         String transactionId = UUID.randomUUID().toString();
+
         repository.save(new ConversionHistoryTransaction(transactionId,request.getSourceCurrency(),
                 request.getTargetCurrency(),request.getAmount(),convertedAmount,LocalDate.now()));
+
         return CurrencyConversionResponse.builder()
                 .transactionId(transactionId)
                 .convertedAmount(convertedAmount)

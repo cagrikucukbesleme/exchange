@@ -6,6 +6,7 @@ import com.example.exchange.model.response.CurrencyConversionResponse;
 import com.example.exchange.repository.ConversionHistoryTransactionRepository;
 import com.example.exchange.service.ConversionHistoryService;
 import com.example.exchange.utils.DateUtils;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -16,13 +17,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class ConversionHistoryServiceImpl implements ConversionHistoryService {
 
     private final ConversionHistoryTransactionRepository repository;
-
-    public ConversionHistoryServiceImpl(ConversionHistoryTransactionRepository repository) {
-        this.repository = repository;
-    }
 
     @Override
     public Mono<List<CurrencyConversionResponse>> getAllConversionHistory() {

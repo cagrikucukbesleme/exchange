@@ -5,6 +5,7 @@ import com.example.exchange.model.response.CurrentExchangeRateResponse;
 import com.example.exchange.model.response.ExchangeRateApiCallResponse;
 import com.example.exchange.service.ExchangeRateService;
 import com.example.exchange.validate.CurrencyValidator;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
@@ -14,13 +15,10 @@ import static com.example.exchange.utils.CurrencyUtils.normalizeCurrencyCode;
 import static com.example.exchange.validate.CurrencyValidator.validateCurrencies;
 
 @Service
+@AllArgsConstructor
 public class ExchangeRateServiceImpl implements ExchangeRateService {
 
     private final WebClient webClient;
-
-    public ExchangeRateServiceImpl(WebClient.Builder webClientBuilder) {
-        this.webClient = webClientBuilder.baseUrl(Constants.API_FRANKFURTER_DEV_V1).build();
-    }
 
     @Override
     public Mono<CurrentExchangeRateResponse> getExchangeRate(String fromCurrency, String toCurrency) {
