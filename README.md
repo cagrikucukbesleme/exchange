@@ -51,20 +51,20 @@ Use of Design Patterns: -> done
 Code Structure: -> done
 * The code should be organized to reflect a clear separation of concerns.
 
-Unit Testing:
+Unit Testing: -> done
 * Include unit tests to ensure the reliability and robustness of the application.
 
 API Documentation: -> done
 * Provide complete and accurate documentation for the API, including request and
 response examples.
 
-Docker:
+Docker: -> error on windows pc
 * Containerize the application with Docker to ensure consistency across different
 environments.
-Proper Use of a Git Repository:
 
+Proper Use of a Git Repository: -> done
 * Maintain the code in a Git repository with a clear history of commits, adhering to
-best practices for version control.
+best practices for version control. 
 
 Optional Features:
 
@@ -72,8 +72,7 @@ API Documentation Tooling: ->done
 * Utilize tools like Swagger or OpenAPI for generating interactive API
 documentation.
 
-Caching:
-
+Caching: -> done
 * Apply caching strategies to improve performance, particularly for exchange rate
 data.
 Hints and Suggestions:
@@ -108,10 +107,14 @@ for bulk currency conversion  uploading file same as image
 * key: "file"
 * value "....csv"
 
+sample data root: src/main/resources/sample-data/conversion_requests.csv
+
 
 ![img.png](img.png)
 
-sample values:
+
+
+sample data file:
 amount,sourceCurrency,targetCurrency
 100,USD,EUR
 250,EUR,GBP

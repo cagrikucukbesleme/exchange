@@ -38,10 +38,10 @@ public class CurrencyConversionServiceImpl implements CurrencyConversionService 
     public Mono<List<CurrencyConversionResponse>> bulkConversion(MultipartFile file) throws IOException {
 
         List<CurrencyConversionRequest> requests = CsvUtils.parseCsv(file);
-        List<CurrencyConversionResponse> collect1 = requests.stream()
+        List<CurrencyConversionResponse> currencyConversionResponseList = requests.stream()
                 .map(this::conversionCurrency)
                 .collect(Collectors.toList());
-        return Mono.just(collect1);
+        return Mono.just(currencyConversionResponseList);
 
     }
 

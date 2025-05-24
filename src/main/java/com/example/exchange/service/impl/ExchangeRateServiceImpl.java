@@ -1,6 +1,5 @@
 package com.example.exchange.service.impl;
 
-import com.example.exchange.constant.Constants;
 import com.example.exchange.model.response.CurrentExchangeRateResponse;
 import com.example.exchange.model.response.ExchangeRateApiCallResponse;
 import com.example.exchange.service.ExchangeRateService;
