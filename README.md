@@ -1,4 +1,4 @@
-Foreign Exchange Currencies Project
+# Foreign Exchange Currencies Project
 
 You will develop a simple foreign exchange application which is one of the most common
 services used in financial applications. 
@@ -109,7 +109,7 @@ for bulk currency conversion  uploading file same as image
 * value "....csv"
 
 
-![img_1.png](img_1.png)
+![img.png](img.png)
 
 sample values:
 amount,sourceCurrency,targetCurrency
