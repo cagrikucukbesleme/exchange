@@ -25,8 +25,9 @@ public class ExchangeRateController {
     }
 
     @GetMapping
-    @Operation(summary = "Exchange Rate", description = "Returns Exchange Rate between 2 currency")
-    public Mono<CurrentExchangeRateResponse> getRate(@RequestParam String from, @RequestParam String to ) {
+    @Operation(summary = "Exchange Rate", description = "Returns Exchange Rate between 2 currency" +
+            "Currencies Formats Universal 3 letters such as \"EUR, USD, TRY, GBP\"")
+    public Mono<CurrentExchangeRateResponse> getExchangeRate(@RequestParam String from, @RequestParam String to ) {
         try {
             from= normalizeCurrencyCode(from);
             to= normalizeCurrencyCode(to);

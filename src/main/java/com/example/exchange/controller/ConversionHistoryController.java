@@ -28,7 +28,11 @@ public class ConversionHistoryController {
     }
 
     @GetMapping("/by-date")
-    @Operation(summary = "Transaction History By Date ", description = "Returns Currency Transactions History according to Date")
+    @Operation(summary = "Transaction History By Date ", description = "Returns Currency Transactions History according to Date" +
+            "Date Formats could be \"dd/MM/yyyy\"\n" +
+            " \"MM/dd/yyyy\"\n" +
+            " \"yyyyMMdd\"\n" +
+            " \"dd-MMM-yyyy\"")
     public Mono<List<CurrencyConversionResponse>> getConversionHistoryByDate(
             @RequestParam(required = false) String date) {
         return conversionHistoryService.getConversionHistoryByDate(date);
