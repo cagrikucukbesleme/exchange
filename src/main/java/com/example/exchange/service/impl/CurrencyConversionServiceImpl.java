@@ -54,29 +54,14 @@ public class CurrencyConversionServiceImpl implements CurrencyConversionService 
         double rate = currentExchangeRateResponse.getRate();
         double convertedAmount = request.getAmount() * rate;
         String transactionId = UUID.randomUUID().toString();
-        transactionsLogSave(request, transactionId, convertedAmount);
-        return mapCurrencyConversionResponse(request, convertedAmount, transactionId);
-    }
-
-    private static CurrencyConversionResponse mapCurrencyConversionResponse(CurrencyConversionRequest request,
-                                                                            double convertedAmount, String transactionId) {
-        CurrencyConversionResponse currencyConversionResponse = new CurrencyConversionResponse();
-        currencyConversionResponse.setTargetCurrency(request.getTargetCurrency());
-        currencyConversionResponse.setSourceCurrency(request.getSourceCurrency());
-        currencyConversionResponse.setConvertedAmount(convertedAmount);
-        currencyConversionResponse.setTransactionId(transactionId);
-        return currencyConversionResponse;
-    }
-
-    private void transactionsLogSave(CurrencyConversionRequest request, String transactionId, double convertedAmount) {
-        ConversionHistoryTransaction conversionHistoryTransaction = new ConversionHistoryTransaction();
-        conversionHistoryTransaction.setId(transactionId);
-        conversionHistoryTransaction.setDate(LocalDate.now());
-        conversionHistoryTransaction.setAmount(request.getAmount());
-        conversionHistoryTransaction.setConvertedAmount(convertedAmount);
-        conversionHistoryTransaction.setSourceCurrency(request.getSourceCurrency());
-        conversionHistoryTransaction.setTargetCurrency(request.getTargetCurrency());
-        repository.save(conversionHistoryTransaction);
+        repository.save(new ConversionHistoryTransaction(transactionId,request.getSourceCurrency(),
+                request.getTargetCurrency(),request.getAmount(),convertedAmount,LocalDate.now()));
+        return CurrencyConversionResponse.builder()
+                .transactionId(transactionId)
+                .convertedAmount(convertedAmount)
+                .sourceCurrency(request.getSourceCurrency())
+                .targetCurrency(request.getTargetCurrency())
+                .build();
     }
 
 }

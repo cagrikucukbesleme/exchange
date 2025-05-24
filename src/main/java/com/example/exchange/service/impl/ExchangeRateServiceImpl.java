@@ -37,7 +37,8 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
 
         assert exchangeRateApiCallResponse != null;
 
-        return Mono.just(getCurrentExchangeRateResponse(fromCurrency, toCurrency, exchangeRateApiCallResponse));
+        return Mono.just(new CurrentExchangeRateResponse(fromCurrency,toCurrency,
+                exchangeRateApiCallResponse.getRates().get(toCurrency)));
     }
 
     private Mono<ExchangeRateApiCallResponse> getExchangeRateFromExternalResource(String fromCurrency, String toCurrency) {
@@ -50,15 +51,5 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
                         .build())
                 .retrieve()
                 .bodyToMono(ExchangeRateApiCallResponse.class);
-    }
-
-    private static CurrentExchangeRateResponse getCurrentExchangeRateResponse(String fromCurrency, String toCurrency,
-                                                                              ExchangeRateApiCallResponse exchangeRateApiCallResponse) {
-        CurrentExchangeRateResponse currentExchangeRateResponse= new CurrentExchangeRateResponse();
-        Double rate = exchangeRateApiCallResponse.getRates().get(toCurrency);
-        currentExchangeRateResponse.setRate(rate);
-        currentExchangeRateResponse.setFrom(fromCurrency);
-        currentExchangeRateResponse.setTo(toCurrency);
-        return currentExchangeRateResponse;
     }
 }

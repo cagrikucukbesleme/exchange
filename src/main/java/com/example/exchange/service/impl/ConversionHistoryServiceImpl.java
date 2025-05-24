@@ -24,7 +24,11 @@ public class ConversionHistoryServiceImpl implements ConversionHistoryService {
     public Mono<List<CurrencyConversionResponse>> getAllConversionHistory() {
         List<ConversionHistoryTransaction> conversionHistoryTransactions = repository.findAll();
         List<CurrencyConversionResponse> currencyConversionResponses = conversionHistoryTransactions.stream()
-                .map(this::mapToCurrencyConversionResponse)
+                .map(transaction -> new CurrencyConversionResponse(
+                        transaction.getId(),
+                        transaction.getConvertedAmount(),
+                        transaction.getSourceCurrency(),
+                        transaction.getTargetCurrency()))
                 .collect(Collectors.toList());
 
         return Mono.just(currencyConversionResponses);
@@ -36,18 +40,14 @@ public class ConversionHistoryServiceImpl implements ConversionHistoryService {
         List<ConversionHistoryTransaction> conversionHistoryTransactions = repository.findAll();
         List<CurrencyConversionResponse> currencyConversionResponses= conversionHistoryTransactions.stream()
                 .filter(transaction -> transaction.getDate() != null && transaction.getDate().equals(localDate))
-                .map(this::mapToCurrencyConversionResponse)
+                .map(transaction -> new CurrencyConversionResponse(
+                        transaction.getId(),
+                        transaction.getConvertedAmount(),
+                        transaction.getSourceCurrency(),
+                        transaction.getTargetCurrency()
+                ))
                 .collect(Collectors.toList());
         return Mono.just(currencyConversionResponses);
-    }
-
-    private CurrencyConversionResponse mapToCurrencyConversionResponse(ConversionHistoryTransaction transaction) {
-        CurrencyConversionResponse currencyConversionResponse= new CurrencyConversionResponse();
-        currencyConversionResponse.setSourceCurrency(transaction.getSourceCurrency());
-        currencyConversionResponse.setTransactionId(transaction.getId());
-        currencyConversionResponse.setTargetCurrency(transaction.getTargetCurrency());
-        currencyConversionResponse.setConvertedAmount(transaction.getConvertedAmount());
-        return currencyConversionResponse;
     }
 
 }

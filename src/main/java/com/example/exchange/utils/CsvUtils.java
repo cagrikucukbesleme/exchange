@@ -43,12 +43,7 @@ public class CsvUtils {
                     if (source.length() != 3 || target.length() != 3) {
                         throw new CurrencyValidator.CurrencyValidationException("Currency codes must be 3 letters in row " + record.getRecordNumber());
                     }
-
-                    CurrencyConversionRequest currencyConversionRequest= new CurrencyConversionRequest();
-                    currencyConversionRequest.setAmount(amount);
-                    currencyConversionRequest.setSourceCurrency(source);
-                    currencyConversionRequest.setTargetCurrency(target);
-                    requests.add(currencyConversionRequest);
+                    requests.add(new CurrencyConversionRequest(amount,source,target));
                     seenCurrencies.add(source);
                     seenCurrencies.add(target);
 
