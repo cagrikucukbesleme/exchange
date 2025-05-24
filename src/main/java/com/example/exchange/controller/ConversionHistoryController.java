@@ -2,6 +2,7 @@ package com.example.exchange.controller;
 
 import com.example.exchange.model.response.CurrencyConversionResponse;
 import com.example.exchange.service.ConversionHistoryService;
+import com.example.exchange.utils.DateUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -33,6 +35,7 @@ public class ConversionHistoryController {
             " \"dd-MMM-yyyy\"")
     public Mono<List<CurrencyConversionResponse>> getConversionHistoryByDate(
             @RequestParam(required = false) String date) {
-        return conversionHistoryService.getConversionHistoryByDate(date);
+        LocalDate localDate= DateUtils.parseStringToLocalDate(date);
+        return conversionHistoryService.getConversionHistoryByDate(localDate);
     }
 }

@@ -5,7 +5,6 @@ import com.example.exchange.model.ConversionHistoryTransaction;
 import com.example.exchange.model.response.CurrencyConversionResponse;
 import com.example.exchange.repository.ConversionHistoryTransactionRepository;
 import com.example.exchange.service.ConversionHistoryService;
-import com.example.exchange.utils.DateUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -32,8 +31,7 @@ public class ConversionHistoryServiceImpl implements ConversionHistoryService {
 
 
     @Override
-    public Mono<List<CurrencyConversionResponse>> getConversionHistoryByDate(String date) {
-        LocalDate localDate= DateUtils.parseStringToLocalDate(date);
+    public Mono<List<CurrencyConversionResponse>> getConversionHistoryByDate(LocalDate localDate) {
         List<ConversionHistoryTransaction> conversionHistoryTransactions = repository.findByDate(localDate);
 
         checkDbResponse(conversionHistoryTransactions,
