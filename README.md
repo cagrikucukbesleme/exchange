@@ -1,8 +1,35 @@
 # Foreign Exchange Currencies Project
 
-You will develop a simple foreign exchange application which is one of the most common
+I develop a simple foreign exchange application which is one of the most common
 services used in financial applications. 
 Requirements are as follows:
+
+### Project Technical Details
+
+#### Dockerized application:
+
+* docker pull cagrikucukbesleme/exchange-app:latest
+* docker run -p 8080:8080 cagrikucukbesleme/exchange-app:latest
+
+
+#### Swagger:
+http://localhost:8080/swagger-ui.html
+
+#### DB Connection Info:
+* db: http://localhost:8080/h2-console/
+* JDBC URL: jdbc:h2:mem:testdb
+* username: sa
+* password:
+
+External exchange api: https://api.frankfurter.dev/v1/
+
+For bulk currency conversion  uploading file same as image
+* key: "file"
+* value "....csv"
+
+sample data root: src/main/resources/sample-data/conversion_requests.csv
+
+
 
 ## Mandatory Functional Requirements:
 
@@ -58,7 +85,7 @@ API Documentation: -> done
 * Provide complete and accurate documentation for the API, including request and
 response examples.
 
-Docker: -> error on windows pc
+Docker: -> done
 * Containerize the application with Docker to ensure consistency across different
 environments.
 
@@ -92,23 +119,7 @@ effectively. Ensure that the Git repository reflects a professional approach to 
 development with meaningful commit messages, feature branches, and pull requests where
 applicable.
 
-External exchange api: https://api.frankfurter.dev/v1/
-
-swagger: http://localhost:8080/swagger-ui.html
-
-#### DB Connections
-* db: http://localhost:8080/h2-console/
-* JDBC URL: jdbc:h2:mem:testdb
-* username: sa
-* password:
-
-
-for bulk currency conversion  uploading file same as image
-* key: "file"
-* value "....csv"
-
-sample data root: src/main/resources/sample-data/conversion_requests.csv
-
+### For Testing Bulk Currency With Importing CSV
 
 ![img.png](img.png)
 
