@@ -6,6 +6,7 @@ import com.example.exchange.service.ConversionHistoryService;
 import com.example.exchange.service.CurrencyConversionService;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,16 +28,18 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyMap;
 import static org.mockito.Mockito.mock;
 
-@SpringBootTest
-@AllArgsConstructor
-@RequiredArgsConstructor
 class CurrencyConversionControllerTest {
 
-    private CurrencyConversionService currencyConversionService = mock(CurrencyConversionService.class);
+    private CurrencyConversionService currencyConversionService;
+    private CurrencyConversionController controller;
+    private WebTestClient webTestClient;
 
-    private CurrencyConversionController controller = new CurrencyConversionController(currencyConversionService);
-
-    private WebTestClient webTestClient = WebTestClient.bindToController(controller).build();
+    @BeforeEach
+    void setup() {
+        currencyConversionService = mock(CurrencyConversionService.class);
+        controller = new CurrencyConversionController(currencyConversionService);
+        webTestClient = WebTestClient.bindToController(controller).build();
+    }
 
     @Test
     void testGetRate() {

@@ -4,6 +4,7 @@ import com.example.exchange.model.response.CurrencyConversionResponse;
 import com.example.exchange.service.ConversionHistoryService;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 
@@ -17,18 +18,18 @@ import java.util.List;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest
-@AllArgsConstructor
-@RequiredArgsConstructor
 class ConversionHistoryControllerTest {
 
-    private ConversionHistoryService conversionHistoryService = mock(ConversionHistoryService.class);
+    private ConversionHistoryService conversionHistoryService;
+    private ConversionHistoryController controller;
+    private WebTestClient webTestClient;
 
-    private ConversionHistoryController controller = new ConversionHistoryController(conversionHistoryService);
-
-    private WebTestClient webTestClient = WebTestClient.bindToController(controller).build();
-
-
+    @BeforeEach
+    void setup() {
+        conversionHistoryService = mock(ConversionHistoryService.class);
+        controller = new ConversionHistoryController(conversionHistoryService);
+        webTestClient = WebTestClient.bindToController(controller).build();
+    }
     @Test
     void getAllConversionHistory() {
 

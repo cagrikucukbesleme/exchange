@@ -2,9 +2,11 @@ package com.example.exchange.controller;
 
 import com.example.exchange.model.response.CurrentExchangeRateResponse;
 import com.example.exchange.service.ConversionHistoryService;
+import com.example.exchange.service.CurrencyConversionService;
 import com.example.exchange.service.ExchangeRateService;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,17 +16,18 @@ import reactor.core.publisher.Mono;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
-@SpringBootTest
-@AllArgsConstructor
-@RequiredArgsConstructor
 class ExchangeRateControllerTest {
 
-    private ExchangeRateService exchangeRateService = mock(ExchangeRateService.class);
+    private ExchangeRateService exchangeRateService;
+    private ExchangeRateController controller;
+    private WebTestClient webTestClient;
 
-    private ExchangeRateController controller = new ExchangeRateController(exchangeRateService);
-
-    private WebTestClient webTestClient = WebTestClient.bindToController(controller).build();
-
+    @BeforeEach
+    void setup() {
+        exchangeRateService = mock(ExchangeRateService.class);
+        controller = new ExchangeRateController(exchangeRateService);
+        webTestClient = WebTestClient.bindToController(controller).build();
+    }
 
     @Test
     void getExchangeRate_ValidCurrencies_ReturnsExchangeRate() {
